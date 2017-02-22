@@ -30,7 +30,7 @@ Game.Launch = function ()
                 alert("You need " + Game.loanCost.toLocaleString() + " Trump Coins to purchase that building.");
             } else
             {
-                alert("You earned A Small Loan of a Million Dollars!");
+                alert("You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)");
                 Game.loan++;
                 Game.coins -= Game.loanCost;
                 Game.loanCost *= 1.1;
