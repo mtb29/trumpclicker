@@ -8,6 +8,16 @@
     width: 200px;
 }
 
+#trumpcoin:hover
+{
+    -webkit-transform:scale(1.25);
+}
+
+#trumpcoin:active
+{
+    -webkit-transform:scale(1.00);
+}
+
 #currentCoins
 {
 }
@@ -16,6 +26,16 @@
 {
     height: 50px;
     width: 75px;
+}
+
+#loan:hover
+{
+    -webkit-transform:scale(1.25);
+}
+
+#loan:active
+{
+    -webkit-transform:scale(1.00);
 }
 
 #currentLoans
@@ -28,6 +48,16 @@
     width: 75px;
 }
 
+#executiveorder:hover
+{
+    -webkit-transform:scale(1.25);
+}
+
+#executiveorder:active
+{
+    -webkit-transform:scale(1.00);
+}
+
 #currentExecutiveOrders
 {
 }
@@ -36,6 +66,16 @@
 {
     height: 50px;
     width: 75px;
+}
+
+#thewall:hover
+{
+    -webkit-transform:scale(1.25);
+}
+
+#thewall:active
+{
+    -webkit-transform:scale(1.00);
 }
 
 #currentWalls

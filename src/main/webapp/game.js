@@ -1,8 +1,13 @@
+/*
+ * Trump Clicker
+ * By: Seth Atkinson, Matthew Brady, Matthew Delosa, Shane Whalen, & Jeremy Wiles
+ * For: CIS4470 @ MU
+ */
 Game = {};
 
 var Trophy = {};
 var TrophyText = {};
-var TotalTrophies = 5;
+var TotalTrophies = 6;
 var TrophyCount = 0;
 
 Game.Launch = function ()
@@ -21,6 +26,7 @@ Game.Launch = function ()
         Game.clicks = 0;
         Game.seconds = 0;
 
+        /* Trophies */
         Trophy[0] = 0;
         TrophyText[0] = "Hello, Mr. President: Earn your first Trump Coin";
         Trophy[1] = 0;
@@ -30,13 +36,15 @@ Game.Launch = function ()
         Trophy[3] = 0;
         TrophyText[3] = "You Made America Great Again: Build the wall";
         Trophy[4] = 0;
-        TrophyText[4] = "Cheaters Never Prosper...wait a doggone minute....: Use the cheat command";
+        TrophyText[4] = "Cheaters Never Prosper...wait a doggone minute....: Use the cheat command successfully";
+        Trophy[5] = 0;
+        TrophyText[5] = "Luck Of The Draw: You Got Lucky";
 
         /* Upgrades */
         Game.loan = 0;
-        Game.loanCost = 250;
+        Game.loanCost = 100;
         Game.executiveOrder = 0;
-        Game.executiveOrderCost = 1000;
+        Game.executiveOrderCost = 250;
         Game.wall = 0;
         Game.wallCost = 20000000000;
 
@@ -54,17 +62,17 @@ Game.Launch = function ()
 
         Game.ClickLoan = function ()
         {
-            if (Trophy[1] === 0) {
-                Trophy[1] = 1;
-                TrophyCount++;
-                alert(TrophyText[1]);
-            }
 
             if (Game.coins < Game.loanCost)
             {
                 alert("You need " + Game.loanCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
             } else
             {
+                if (Trophy[1] === 0) {
+                    Trophy[1] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[1]);
+                }
                 alert("You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)");
                 Game.loan++;
                 Game.coins -= Game.loanCost;
@@ -75,17 +83,17 @@ Game.Launch = function ()
 
         Game.ClickOrder = function ()
         {
-            if (Trophy[2] === 0) {
-                Trophy[2] = 1;
-                TrophyCount++;
-                alert(TrophyText[2]);
-            }
 
             if (Game.coins < Game.executiveOrderCost)
             {
                 alert("You need " + Game.executiveOrderCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
             } else
             {
+                if (Trophy[2] === 0) {
+                    Trophy[2] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[2]);
+                }
                 alert("You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost + " Trump Coins)");
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
@@ -96,15 +104,15 @@ Game.Launch = function ()
 
         Game.ClickWall = function ()
         {
-            if (Trophy[3] === 0) {
-                Trophy[3] = 1;
-                TrophyCount++;
-                alert(TrophyText[3]);
-            }
 
             if (Game.coins < Game.wallCost) {
                 alert("You need " + Game.wallCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
             } else {
+                if (Trophy[3] === 0) {
+                    Trophy[3] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[3]);
+                }
                 Game.wall++;
                 Game.coins -= Game.wallCost;
                 Game.wallCost *= 2.5;
@@ -120,7 +128,7 @@ Game.Launch = function ()
             Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5);
             Game.coins += Game.coinsPerSecond;
             document.getElementById("currentCoins").innerHTML = "Trump Coins: " + Game.coins.toLocaleString() + " (+" + Game.coinsPerClick.toLocaleString() + " CPC/+" + Game.coinsPerSecond.toLocaleString() + " CPS)";
-            document.getElementById("currentLoans").innerHTML = "Loans: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
+            document.getElementById("currentLoans").innerHTML = "Small Loans: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "Build the Wall<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
             document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder) + "<br/>Seconds: " + Game.seconds.toLocaleString();
@@ -129,6 +137,17 @@ Game.Launch = function ()
 
         Trophies = function ()
         {
+            var rand = Math.floor((Math.random() * 5000) + 1);
+
+            if (rand === 42) {
+                if (Trophy[5] === 0) {
+                    Trophy[5] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[5]);
+                }
+            }
+
+
             var text = "Trophies [" + TrophyCount + "/" + TotalTrophies + "]";
             for (i = 0; i <= TotalTrophies; i++) {
                 if (Trophy[i] === 1) {
@@ -143,21 +162,22 @@ Game.Launch = function ()
 
         Game.Cheater = function ()
         {
-            if (Trophy[4] === 0) {
-                Trophy[4] = 1;
-                TrophyCount++;
-                alert(TrophyText[4]);
-            }
-
             var rand = Math.floor((Math.random() * 4) + 1);
 
             if (rand === 1) {
                 alert("You're Fired! The game has been reset!");
                 window.location.reload();
+            } else {
+                if (Trophy[4] === 0) {
+                    Trophy[4] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[4]);
+                }
+
+                Game.coins += 20000000000;
+                Game.loan += 2500;
+                Game.executiveOrder += 2500;
             }
-            Game.coins += 20000000000;
-            Game.loan += 2500;
-            Game.executiveOrder += 2500;
         };
 
         document.getElementById("trumpcoin").onclick = Game.ClickCoin;
