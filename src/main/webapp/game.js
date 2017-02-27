@@ -7,7 +7,7 @@ Game = {};
 
 var Trophy = {};
 var TrophyText = {};
-var TotalTrophies = 6;
+var TotalTrophies = 7;
 var TrophyCount = 0;
 
 Game.Launch = function ()
@@ -39,12 +39,16 @@ Game.Launch = function ()
         TrophyText[4] = "Cheaters Never Prosper...wait a doggone minute....: Use the cheat command successfully";
         Trophy[5] = 0;
         TrophyText[5] = "Luck Of The Draw: You Got Lucky";
+        Trophy[6] = 0;
+        TrophyText[6] = "Permission Denied: Deport your first illegal immigrant";
 
         /* Upgrades */
         Game.loan = 0;
         Game.loanCost = 100;
         Game.executiveOrder = 0;
         Game.executiveOrderCost = 250;
+        Game.deport = 0; // Credit to Ryan Smalley
+        Game.deportCost = 500;
         Game.wall = 0;
         Game.wallCost = 20000000000;
 
@@ -76,7 +80,7 @@ Game.Launch = function ()
                 alert("You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)");
                 Game.loan++;
                 Game.coins -= Game.loanCost;
-                Game.loanCost *= 1.1;
+                Game.loanCost *= 1.2;
                 Game.loanCost = Math.round(Game.loanCost);
             }
         };
@@ -97,8 +101,28 @@ Game.Launch = function ()
                 alert("You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost + " Trump Coins)");
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
-                Game.executiveOrderCost *= 1.5;
+                Game.executiveOrderCost *= 1.3;
                 Game.executiveOrderCost = Math.round(Game.executiveOrderCost);
+            }
+        };
+
+        Game.ClickDeport = function ()
+        {
+            if (Game.coins < Game.deportCost)
+            {
+                alert("You need " + Game.deportCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
+            } else
+            {
+                if (Trophy[6] === 0) {
+                    Trophy[6] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[6]);
+                }
+                alert("You deported an illegal immigrant (-" + Game.deportCost + " Trump Coins)");
+                Game.deport++;
+                Game.coins -= Game.deportCost;
+                Game.deportCost *= 1.4;
+                Game.deportCost = Math.round(Game.deportCost);
             }
         };
 
@@ -124,12 +148,13 @@ Game.Launch = function ()
         Game.Update = function ()
         {
             Game.seconds++;
-            Game.coinsPerClick = 1 + Game.loan + (Game.executiveOrder * 3);
-            Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5);
+            Game.coinsPerClick = 1 + Game.loan + (Game.executiveOrder * 3) + (Game.deport * 4);
+            Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5) + (Game.deport * 6);
             Game.coins += Game.coinsPerSecond;
             document.getElementById("currentCoins").innerHTML = "Trump Coins: " + Game.coins.toLocaleString() + " (+" + Game.coinsPerClick.toLocaleString() + " CPC/+" + Game.coinsPerSecond.toLocaleString() + " CPS)";
             document.getElementById("currentLoans").innerHTML = "Small Loans: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
+            document.getElementById("currentDeports").innerHTML = "Immigrants Deported: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "Build the Wall<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
             document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder) + "<br/>Seconds: " + Game.seconds.toLocaleString();
             Trophies();
@@ -177,12 +202,14 @@ Game.Launch = function ()
                 Game.coins += 20000000000;
                 Game.loan += 2500;
                 Game.executiveOrder += 2500;
+                Game.deport += 2500;
             }
         };
 
         document.getElementById("trumpcoin").onclick = Game.ClickCoin;
         document.getElementById("loan").onclick = Game.ClickLoan;
         document.getElementById("executiveorder").onclick = Game.ClickOrder;
+        document.getElementById("deportillegal").onclick = Game.ClickDeport;
         document.getElementById("thewall").onclick = Game.ClickWall;
         document.getElementById("header").innerHTML = "Trump Clicker<br/>Version: " + Game.version;
         Game.Update();
