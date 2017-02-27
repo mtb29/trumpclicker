@@ -7,7 +7,7 @@ Game = {};
 
 var Trophy = {};
 var TrophyText = {};
-var TotalTrophies = 7;
+var TotalTrophies = 8;
 var TrophyCount = 0;
 
 Game.Launch = function ()
@@ -41,6 +41,8 @@ Game.Launch = function ()
         TrophyText[5] = "Luck Of The Draw: You Got Lucky";
         Trophy[6] = 0;
         TrophyText[6] = "Permission Denied: Deport your first illegal immigrant";
+        Trophy[7] = 0;
+        TrophyText[7] = "The Meaning to Life, the Universe, and Everything: Buy 42 upgrades"
 
         /* Upgrades */
         Game.loan = 0;
@@ -156,7 +158,7 @@ Game.Launch = function ()
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
             document.getElementById("currentDeports").innerHTML = "Immigrants Deported: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "Build the Wall<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
-            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder) + "<br/>Seconds: " + Game.seconds.toLocaleString();
+            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Seconds: " + Game.seconds.toLocaleString();
             Trophies();
         };
 
@@ -169,6 +171,14 @@ Game.Launch = function ()
                     Trophy[5] = 1;
                     TrophyCount++;
                     alert(TrophyText[5]);
+                }
+            }
+
+            if (Trophy[7] === 0) {
+                if ((Game.loan + Game.executiveOrder + Game.deport) >= 42) {
+                    Trophy[7] = 1;
+                    TrophyCount++;
+                    alert(TrophyText[7]);
                 }
             }
 
