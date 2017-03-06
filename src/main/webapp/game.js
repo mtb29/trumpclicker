@@ -42,7 +42,7 @@ Game.Launch = function ()
         Trophy[6] = 0;
         TrophyText[6] = "Permission Denied: Deport your first illegal immigrant";
         Trophy[7] = 0;
-        TrophyText[7] = "The Meaning to Life, the Universe, and Everything: Buy 42 upgrades"
+        TrophyText[7] = "The Meaning to Life, the Universe, and Everything: Buy 42 upgrades";
 
         /* Upgrades */
         Game.loan = 0;
@@ -59,7 +59,7 @@ Game.Launch = function ()
             if (Trophy[0] === 0) {
                 Trophy[0] = 1;
                 TrophyCount++;
-                alert(TrophyText[0]);
+                document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[0];
             }
 
             Game.clicks++;
@@ -71,15 +71,15 @@ Game.Launch = function ()
 
             if (Game.coins < Game.loanCost)
             {
-                alert("You need " + Game.loanCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You need " + Game.loanCost.toLocaleString() + " Trump Coins to purchase that upgrade.";
             } else
             {
                 if (Trophy[1] === 0) {
                     Trophy[1] = 1;
                     TrophyCount++;
-                    alert(TrophyText[1]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[1];
                 }
-                alert("You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)";
                 Game.loan++;
                 Game.coins -= Game.loanCost;
                 Game.loanCost *= 1.2;
@@ -92,15 +92,15 @@ Game.Launch = function ()
 
             if (Game.coins < Game.executiveOrderCost)
             {
-                alert("You need " + Game.executiveOrderCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You need " + Game.executiveOrderCost.toLocaleString() + " Trump Coins to purchase that upgrade.";
             } else
             {
                 if (Trophy[2] === 0) {
                     Trophy[2] = 1;
                     TrophyCount++;
-                    alert(TrophyText[2]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[2];
                 }
-                alert("You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost + " Trump Coins)");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost + " Trump Coins)";
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
                 Game.executiveOrderCost *= 1.3;
@@ -112,15 +112,15 @@ Game.Launch = function ()
         {
             if (Game.coins < Game.deportCost)
             {
-                alert("You need " + Game.deportCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You need " + Game.deportCost.toLocaleString() + " Trump Coins to purchase that upgrade.";
             } else
             {
                 if (Trophy[6] === 0) {
                     Trophy[6] = 1;
                     TrophyCount++;
-                    alert(TrophyText[6]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[6];
                 }
-                alert("You deported an illegal immigrant (-" + Game.deportCost + " Trump Coins)");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost + " Trump Coins)";
                 Game.deport++;
                 Game.coins -= Game.deportCost;
                 Game.deportCost *= 1.4;
@@ -132,12 +132,12 @@ Game.Launch = function ()
         {
 
             if (Game.coins < Game.wallCost) {
-                alert("You need " + Game.wallCost.toLocaleString() + " Trump Coins to purchase that upgrade.");
+                document.getElementById("toolTip").innerHTML = "ToolTip: You need " + Game.wallCost.toLocaleString() + " Trump Coins to purchase that upgrade.";
             } else {
                 if (Trophy[3] === 0) {
                     Trophy[3] = 1;
                     TrophyCount++;
-                    alert(TrophyText[3]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[3];
                 }
                 Game.wall++;
                 Game.coins -= Game.wallCost;
@@ -161,6 +161,7 @@ Game.Launch = function ()
             document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Seconds: " + Game.seconds.toLocaleString();
             Trophies();
         };
+        
 
         Trophies = function ()
         {
@@ -170,7 +171,7 @@ Game.Launch = function ()
                 if (Trophy[5] === 0) {
                     Trophy[5] = 1;
                     TrophyCount++;
-                    alert(TrophyText[5]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[5];
                 }
             }
 
@@ -178,7 +179,7 @@ Game.Launch = function ()
                 if ((Game.loan + Game.executiveOrder + Game.deport) >= 42) {
                     Trophy[7] = 1;
                     TrophyCount++;
-                    alert(TrophyText[7]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[7];
                 }
             }
 
@@ -200,13 +201,13 @@ Game.Launch = function ()
             var rand = Math.floor((Math.random() * 4) + 1);
 
             if (rand === 1) {
-                alert("You're Fired! The game has been reset!");
-                window.location.reload();
+                document.getElementById("toolTip").innerHTML = "ToolTip: You're Fired! The game has been reset!";
+                setTimeout(function(){ window.location.reload(); }, 2500);
             } else {
                 if (Trophy[4] === 0) {
                     Trophy[4] = 1;
                     TrophyCount++;
-                    alert(TrophyText[4]);
+                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[4];
                 }
 
                 Game.coins += 20000000000;
@@ -214,6 +215,10 @@ Game.Launch = function ()
                 Game.executiveOrder += 2500;
                 Game.deport += 2500;
             }
+        };
+        
+        Game.reload = function () {
+            window.location.reload();
         };
 
         document.getElementById("trumpcoin").onclick = Game.ClickCoin;
