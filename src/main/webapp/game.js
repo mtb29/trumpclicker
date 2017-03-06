@@ -10,6 +10,23 @@ var TrophyText = {};
 var TotalTrophies = 8;
 var TrophyCount = 0;
 
+function secondsToTime(secs)
+{
+    var hours = Math.floor(secs / (60 * 60));
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    if (hours > 0) {
+        return hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
+    } else if (minutes > 0) {
+        return minutes + " minutes, " + seconds + " seconds";
+    } else {
+        return seconds + " seconds";
+    }
+}
+
 Game.Launch = function ()
 {
     Game.ready = 0;
@@ -158,10 +175,10 @@ Game.Launch = function ()
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
             document.getElementById("currentDeports").innerHTML = "Immigrants Deported: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "Build the Wall<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
-            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Seconds: " + Game.seconds.toLocaleString();
+            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Time: " + secondsToTime(Game.seconds);
             Trophies();
         };
-        
+
 
         Trophies = function ()
         {
@@ -202,7 +219,9 @@ Game.Launch = function ()
 
             if (rand === 1) {
                 document.getElementById("toolTip").innerHTML = "ToolTip: You're Fired! The game has been reset!";
-                setTimeout(function(){ window.location.reload(); }, 2500);
+                setTimeout(function () {
+                    window.location.reload();
+                }, 2500);
             } else {
                 if (Trophy[4] === 0) {
                     Trophy[4] = 1;
@@ -216,7 +235,7 @@ Game.Launch = function ()
                 Game.deport += 2500;
             }
         };
-        
+
         Game.reload = function () {
             window.location.reload();
         };
