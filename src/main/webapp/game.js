@@ -17,13 +17,40 @@ function secondsToTime(secs)
     var minutes = Math.floor(divisor_for_minutes / 60);
     var divisor_for_seconds = divisor_for_minutes % 60;
     var seconds = Math.ceil(divisor_for_seconds);
+    var hr;
+    var min;
+    var snd;
 
     if (hours > 0) {
-        return hours + " hours, " + minutes + " minutes, " + seconds + " seconds";
+        if (hours === 1) {
+            hr = " hour";
+        } else {
+            hr = " hours";
+        }
+    }
+
+    if (minutes >= 0) {
+        if (minutes === 1) {
+            min = " minute";
+        } else {
+            min = " minutes";
+        }
+    }
+
+    if (seconds >= 0) {
+        if (seconds === 1) {
+            snd = " second";
+        } else {
+            snd = " seconds";
+        }
+    }
+
+    if (hours > 0) {
+        return hours.toLocaleString() + hr + ", " + minutes + min + ", " + seconds + snd;
     } else if (minutes > 0) {
-        return minutes + " minutes, " + seconds + " seconds";
+        return minutes + min + ", " + seconds + snd;
     } else {
-        return seconds + " seconds";
+        return seconds + snd;
     }
 }
 
