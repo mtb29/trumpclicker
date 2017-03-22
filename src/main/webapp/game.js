@@ -22,27 +22,15 @@ function secondsToTime(secs)
     var snd;
 
     if (hours > 0) {
-        if (hours === 1) {
-            hr = " hour";
-        } else {
-            hr = " hours";
-        }
+        hours === 1 ? hr = " hour" : hr = " hours";
     }
 
     if (minutes >= 0) {
-        if (minutes === 1) {
-            min = " minute";
-        } else {
-            min = " minutes";
-        }
+        minutes === 1 ? min = " minute" : min = " minutes";
     }
 
     if (seconds >= 0) {
-        if (seconds === 1) {
-            snd = " second";
-        } else {
-            snd = " seconds";
-        }
+        seconds === 1 ? snd = " second" : snd = " seconds";
     }
 
     if (hours > 0) {
@@ -90,11 +78,11 @@ Game.Launch = function ()
 
         /* Upgrades */
         Game.loan = 0;
-        Game.loanCost = 100;
+        Game.loanCost = 10;
         Game.executiveOrder = 0;
-        Game.executiveOrderCost = 250;
+        Game.executiveOrderCost = 100;
         Game.deport = 0; // Credit to Ryan Smalley
-        Game.deportCost = 500;
+        Game.deportCost = 250;
         Game.wall = 0;
         Game.wallCost = 20000000000;
 
@@ -121,12 +109,11 @@ Game.Launch = function ()
                 if (Trophy[1] === 0) {
                     Trophy[1] = 1;
                     TrophyCount++;
-                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[1];
                 }
-                document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost + " Trump Coins)";
+                document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost.toLocaleString() + " Trump Coins)";
                 Game.loan++;
                 Game.coins -= Game.loanCost;
-                Game.loanCost *= 1.2;
+                Game.loanCost *= 1.05;
                 Game.loanCost = Math.round(Game.loanCost);
             }
         };
@@ -142,12 +129,11 @@ Game.Launch = function ()
                 if (Trophy[2] === 0) {
                     Trophy[2] = 1;
                     TrophyCount++;
-                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[2];
                 }
-                document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost + " Trump Coins)";
+                document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost.toLocaleString() + " Trump Coins)";
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
-                Game.executiveOrderCost *= 1.3;
+                Game.executiveOrderCost *= 1.06;
                 Game.executiveOrderCost = Math.round(Game.executiveOrderCost);
             }
         };
@@ -162,12 +148,11 @@ Game.Launch = function ()
                 if (Trophy[6] === 0) {
                     Trophy[6] = 1;
                     TrophyCount++;
-                    document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[6];
                 }
-                document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost + " Trump Coins)";
+                document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost.toLocaleString() + " Trump Coins)";
                 Game.deport++;
                 Game.coins -= Game.deportCost;
-                Game.deportCost *= 1.4;
+                Game.deportCost *= 1.07;
                 Game.deportCost = Math.round(Game.deportCost);
             }
         };
@@ -201,7 +186,7 @@ Game.Launch = function ()
             document.getElementById("currentLoans").innerHTML = "Small Loans: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
             document.getElementById("currentDeports").innerHTML = "Immigrants Deported: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
-            document.getElementById("currentWalls").innerHTML = "Build the Wall<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
+            document.getElementById("currentWalls").innerHTML = "Walls Built: " + Game.wall.toLocaleString() + "<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
             document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Time: " + secondsToTime(Game.seconds);
             Trophies();
         };
