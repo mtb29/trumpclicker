@@ -7,7 +7,7 @@ Game = {};
 
 var Trophy = {};
 var TrophyText = {};
-var TotalTrophies = 8;
+var TotalTrophies = 9;
 var TrophyCount = 0;
 
 function secondsToTime(secs)
@@ -51,7 +51,7 @@ Game.Launch = function ()
         Game.ready = 1;
 
         /* Game variables */
-        Game.version = 0.1;
+        Game.version = 0.2;
         Game.coins = 0;
         Game.coinsPerClick = 1;
         Game.coinsPerSecond = 0;
@@ -75,6 +75,8 @@ Game.Launch = function ()
         TrophyText[6] = "Permission Denied: Deport your first illegal immigrant";
         Trophy[7] = 0;
         TrophyText[7] = "The Meaning to Life, the Universe, and Everything: Buy 42 upgrades";
+        Trophy[8] = 0;
+        TrophyText[8] = "Hello, Comrade?: Make your first phone call."
 
         /* Upgrades */
         Game.loan = 0;
@@ -83,6 +85,8 @@ Game.Launch = function ()
         Game.executiveOrderCost = 100;
         Game.deport = 0; // Credit to Ryan Smalley
         Game.deportCost = 250;
+        Game.phoneCall = 0; // Seth Atkinson
+        Game.phoneCallCost = 350;
         Game.wall = 0;
         Game.wallCost = 20000000000;
 
@@ -133,7 +137,7 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost.toLocaleString() + " Trump Coins)";
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
-                Game.executiveOrderCost *= 1.06;
+                Game.executiveOrderCost *= 1.055;
                 Game.executiveOrderCost = Math.round(Game.executiveOrderCost);
             }
         };
@@ -152,8 +156,27 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost.toLocaleString() + " Trump Coins)";
                 Game.deport++;
                 Game.coins -= Game.deportCost;
-                Game.deportCost *= 1.07;
+                Game.deportCost *= 1.060;
                 Game.deportCost = Math.round(Game.deportCost);
+            }
+        };
+        
+        Game.ClickPhone = function ()
+        {
+            if (Game.coins < Game.phoneCallCost)
+            {
+                document.getElementById("toolTip").innerHTML = "ToolTip: You need " + Game.phoneCallCost.toLocaleString() + " Trump Coins to purchase that upgrade.";
+            } else
+            {
+                if (Trophy[8] === 0) {
+                    Trophy[8] = 1;
+                    TrophyCount++;
+                }
+                document.getElementById("toolTip").innerHTML = "ToolTip: You made an international phone call (-" + Game.phoneCallCost.toLocaleString() + " Trump Coins)";
+                Game.phoneCall++;
+                Game.coins -= Game.phoneCallCost;
+                Game.phoneCallCost *= 1.065;
+                Game.phoneCallCost = Math.round(Game.phoneCallCost);
             }
         };
 
@@ -179,15 +202,16 @@ Game.Launch = function ()
         Game.Update = function ()
         {
             Game.seconds++;
-            Game.coinsPerClick = 1 + Game.loan + (Game.executiveOrder * 3) + (Game.deport * 4);
-            Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5) + (Game.deport * 6);
+            Game.coinsPerClick = 1 + Game.loan + (Game.executiveOrder * 3) + (Game.deport * 4) + (Game.phoneCall * 5);
+            Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5) + (Game.deport * 6) + (Game.phoneCall * 7);
             Game.coins += Game.coinsPerSecond;
             document.getElementById("currentCoins").innerHTML = "Trump Coins: " + Game.coins.toLocaleString() + " (+" + Game.coinsPerClick.toLocaleString() + " CPC/+" + Game.coinsPerSecond.toLocaleString() + " CPS)";
             document.getElementById("currentLoans").innerHTML = "Small Loans: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
             document.getElementById("currentExecutiveOrders").innerHTML = "Executive Orders: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
             document.getElementById("currentDeports").innerHTML = "Immigrants Deported: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
+            document.getElementById("currentPhoneCalls").innerHTML = "Phone Calls: " + Game.phoneCall.toLocaleString() + " (+" + (Game.phoneCall * 5).toLocaleString() + " CPC/+" + (Game.phoneCall * 7).toLocaleString() + " CPS)<br/>Price: " + Game.phoneCallCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "Walls Built: " + Game.wall.toLocaleString() + "<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
-            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport) + "<br/>Time: " + secondsToTime(Game.seconds);
+            document.getElementById("stats").innerHTML = "Stats<br/><br/>Coin Clicks: " + Game.clicks.toLocaleString() + "<br/>Upgrades: " + (Game.loan + Game.executiveOrder + Game.deport + Game.phoneCall) + "<br/>Time: " + secondsToTime(Game.seconds);
             Trophies();
         };
 
@@ -205,7 +229,7 @@ Game.Launch = function ()
             }
 
             if (Trophy[7] === 0) {
-                if ((Game.loan + Game.executiveOrder + Game.deport) >= 42) {
+                if ((Game.loan + Game.executiveOrder + Game.deport + Game.phoneCall) >= 42) {
                     Trophy[7] = 1;
                     TrophyCount++;
                     document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[7];
@@ -245,6 +269,7 @@ Game.Launch = function ()
                 Game.loan += 2500;
                 Game.executiveOrder += 2500;
                 Game.deport += 2500;
+                Game.phoneCall += 2500;
             }
         };
 
@@ -256,6 +281,7 @@ Game.Launch = function ()
         document.getElementById("loan").onclick = Game.ClickLoan;
         document.getElementById("executiveorder").onclick = Game.ClickOrder;
         document.getElementById("deportillegal").onclick = Game.ClickDeport;
+        document.getElementById("phonecall").onclick = Game.ClickPhone;
         document.getElementById("thewall").onclick = Game.ClickWall;
         document.getElementById("header").innerHTML = "Trump Clicker<br/>Version: " + Game.version;
         Game.Update();

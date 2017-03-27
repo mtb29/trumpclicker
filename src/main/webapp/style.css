@@ -78,6 +78,30 @@
     -webkit-transform:scale(1.00);
 }
 
+#currentDeports
+{
+}
+
+#phonecall
+{
+    height: 50px;
+    width: 75px;
+}
+
+#phonecall:hover
+{
+    -webkit-transform:scale(1.25);
+}
+
+#phonecall:active
+{
+    -webkit-transform:scale(1.00);
+}
+
+#currentPhoneCalls
+{
+}
+
 #thewall
 {
     height: 50px;
