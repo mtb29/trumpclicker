@@ -3,8 +3,25 @@
     <head>
         <title>Trump Clicker Winner</title>
         <link href="style.css" rel="stylesheet" type="text/css">
-    </head>
+        <script>
+            var click = 0;
+
+            function changeImage() {
+
+                if (click === 0)
+                {
+                    document.getElementById("picture").src = "img/win2.png";
+                    click = 1;
+                } else
+                {
+                    document.getElementById("picture").src = "img/win1.png";
+                    click = 0;
+                }
+            }
+        </script>
+    </head> 
     <body>
         <h1>You made America great again!</h1>
+        <img id="picture" src="img/win1.png" alt="Winner Winner Chicken Dinner" onclick="changeImage()"/>
     </body>
 </html>

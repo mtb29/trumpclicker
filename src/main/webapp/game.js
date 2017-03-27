@@ -195,7 +195,7 @@ Game.Launch = function ()
                 Game.coins -= Game.wallCost;
                 Game.wallCost *= 2.5;
                 Game.wallCost = Math.round(Game.wallCost);
-                window.open("winner.html", "_blank");
+                window.open("winner.html", "_blank", 'height=600,width=600');
             }
         };
 
