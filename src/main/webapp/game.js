@@ -309,8 +309,7 @@ Game.Launch = function ()
                     Trophy[4] = 1;
                     TrophyCount++;
                     playcheat();
-                }
-                else {
+                } else {
                     playcheat();
                 }
 
