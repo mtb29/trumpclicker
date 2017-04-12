@@ -42,6 +42,15 @@ function secondsToTime(secs)
     }
 }
 
+function play() {
+    var audio = document.getElementById('trophysound');
+    if (audio.paused) {
+        audio.play();
+    }else{
+        audio.currentTime = 0;
+    }
+}
+
 Game.Launch = function ()
 {
     Game.ready = 0;
@@ -96,6 +105,7 @@ Game.Launch = function ()
                 Trophy[0] = 1;
                 TrophyCount++;
                 document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[0];
+                play();
             }
 
             Game.clicks++;
@@ -113,6 +123,7 @@ Game.Launch = function ()
                 if (Trophy[1] === 0) {
                     Trophy[1] = 1;
                     TrophyCount++;
+                    play();
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost.toLocaleString() + " Trump Coins)";
                 Game.loan++;
@@ -133,6 +144,7 @@ Game.Launch = function ()
                 if (Trophy[2] === 0) {
                     Trophy[2] = 1;
                     TrophyCount++;
+                    play();
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost.toLocaleString() + " Trump Coins)";
                 Game.executiveOrder++;
@@ -152,6 +164,7 @@ Game.Launch = function ()
                 if (Trophy[6] === 0) {
                     Trophy[6] = 1;
                     TrophyCount++;
+                    play();
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost.toLocaleString() + " Trump Coins)";
                 Game.deport++;
@@ -171,6 +184,7 @@ Game.Launch = function ()
                 if (Trophy[8] === 0) {
                     Trophy[8] = 1;
                     TrophyCount++;
+                    play();
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You made an international phone call (-" + Game.phoneCallCost.toLocaleString() + " Trump Coins)";
                 Game.phoneCall++;
@@ -190,6 +204,7 @@ Game.Launch = function ()
                     Trophy[3] = 1;
                     TrophyCount++;
                     document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[3];
+                    play();
                 }
                 Game.wall++;
                 Game.coins -= Game.wallCost;
@@ -225,6 +240,7 @@ Game.Launch = function ()
                     Trophy[5] = 1;
                     TrophyCount++;
                     document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[5];
+                    play();
                 }
             }
 
@@ -233,6 +249,7 @@ Game.Launch = function ()
                     Trophy[7] = 1;
                     TrophyCount++;
                     document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[7];
+                    play();
                 }
             }
 
@@ -263,6 +280,7 @@ Game.Launch = function ()
                     Trophy[4] = 1;
                     TrophyCount++;
                     document.getElementById("toolTip").innerHTML = "ToolTip: Trophy: " + TrophyText[4];
+                    play();
                 }
 
                 Game.coins += 20000000000;
