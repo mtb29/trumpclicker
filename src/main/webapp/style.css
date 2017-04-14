@@ -1,3 +1,17 @@
+#container
+{
+    width: 600px;
+    height: 1200px;
+    border: solid black 3px;
+}
+
+#containerwin
+{
+    width: 500px;
+    height: 350px;
+    border: solid black 3px;
+}
+
 #header
 {
 }
@@ -5,7 +19,6 @@
 body 
 {
     background-color: #e8eef9;
-    border: solid black 1px;
     cursor: url('img/trumpcoinmini.png'), auto;	
 }
 

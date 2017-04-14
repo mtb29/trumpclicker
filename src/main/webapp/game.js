@@ -42,26 +42,16 @@ function secondsToTime(secs)
     }
 }
 
-function play() {
-    var audio = document.getElementById('trophysound');
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.currentTime = 0;
+function playSound(id) {
+    
+    switch(id) {
+        case 1: var audio = document.getElementById('trophysound'); break;
+        case 2: var audio = document.getElementById('minimesound'); break;
+        case 3: var audio = document.getElementById('cheatsound'); break;
+        case 4: var audio = document.getElementById('firedsound'); break;
+        case 5: var audio = document.getElementById('americasound'); break;
     }
-}
 
-function playmini() {
-    var audio = document.getElementById('minimesound');
-    if (audio.paused) {
-        audio.play();
-    } else {
-        audio.currentTime = 0;
-    }
-}
-
-function playcheat() {
-    var audio = document.getElementById('cheatsound');
     if (audio.paused) {
         audio.play();
     } else {
@@ -124,7 +114,7 @@ Game.Launch = function ()
             if (Trophy[0] === 0) {
                 Trophy[0] = 1;
                 TrophyCount++;
-                play();
+                playSound(1);
             }
 
             Game.clicks++;
@@ -142,7 +132,7 @@ Game.Launch = function ()
                 if (Trophy[1] === 0) {
                     Trophy[1] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost.toLocaleString() + " Trump Coins)";
                 Game.loan++;
@@ -163,7 +153,7 @@ Game.Launch = function ()
                 if (Trophy[2] === 0) {
                     Trophy[2] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost.toLocaleString() + " Trump Coins)";
                 Game.executiveOrder++;
@@ -183,7 +173,7 @@ Game.Launch = function ()
                 if (Trophy[6] === 0) {
                     Trophy[6] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost.toLocaleString() + " Trump Coins)";
                 Game.deport++;
@@ -203,7 +193,7 @@ Game.Launch = function ()
                 if (Trophy[8] === 0) {
                     Trophy[8] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
                 document.getElementById("toolTip").innerHTML = "ToolTip: You made an international phone call (-" + Game.phoneCallCost.toLocaleString() + " Trump Coins)";
                 Game.phoneCall++;
@@ -222,13 +212,13 @@ Game.Launch = function ()
                 if (Trophy[3] === 0) {
                     Trophy[3] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
                 Game.wall++;
                 Game.coins -= Game.wallCost;
                 Game.wallCost *= 2.5;
                 Game.wallCost = Math.round(Game.wallCost);
-                window.open("winner.html", "_blank", 'height=600,width=600');
+                window.open("winner.html", "_blank", 'height=375,width=550');
             }
         };
 
@@ -237,9 +227,9 @@ Game.Launch = function ()
             if (Trophy[9] === 0) {
                 Trophy[9] = 1;
                 TrophyCount++;
-                play();
+                playSound(1);
             } else {
-                playmini();
+                playSound(2);
             }
         };
 
@@ -268,7 +258,7 @@ Game.Launch = function ()
                 if (Trophy[5] === 0) {
                     Trophy[5] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
             }
 
@@ -276,7 +266,7 @@ Game.Launch = function ()
                 if ((Game.loan + Game.executiveOrder + Game.deport + Game.phoneCall) >= 42) {
                     Trophy[7] = 1;
                     TrophyCount++;
-                    play();
+                    playSound(1);
                 }
             }
 
@@ -300,7 +290,7 @@ Game.Launch = function ()
 
             if (rand === 1) {
                 document.getElementById("toolTip").innerHTML = "ToolTip: You're Fired! The game has been reset!";
-                playcheat();
+                playSound(4);
                 setTimeout(function () {
                     window.location.reload();
                 }, 2500);
@@ -308,9 +298,9 @@ Game.Launch = function ()
                 if (Trophy[4] === 0) {
                     Trophy[4] = 1;
                     TrophyCount++;
-                    playcheat();
+                    playSound(3);
                 } else {
-                    playcheat();
+                    playSound(3);
                 }
 
                 Game.coins += 20000000000;
@@ -334,6 +324,7 @@ Game.Launch = function ()
         document.getElementById("header").innerHTML = "Trump Clicker<br/>Version: " + Game.version;
         Game.Update();
         setInterval(Game.Update, 1000);
+        playSound(5);
     };
 };
 
