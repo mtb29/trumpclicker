@@ -9,6 +9,8 @@ var Trophy = {};
 var TrophyText = {};
 var TotalTrophies = 10;
 var TrophyCount = 0;
+var TrophyClick = 0;
+var TrophySecond = 0;
 
 function secondsToTime(secs)
 {
@@ -93,20 +95,33 @@ Game.Launch = function ()
         Trophy[7] = 0;
         TrophyText[7] = "<strong>The Meaning to Life, the Universe, and Everything</strong>: Buy 42 upgrades";
         Trophy[8] = 0;
-        TrophyText[8] = "<strong>Hello, Comrade?</strong>: Make your first phone call."
+        TrophyText[8] = "<strong>Hello, Comrade?</strong>: Make your first phone call.";
         Trophy[9] = 0;
         TrophyText[9] = "<strong>It's like me, but mini</strong>: Click on minime.";
 
         /* Upgrades */
         Game.loan = 0;
+        Game.loanBase = 10;
         Game.loanCost = 10;
+        Game.loanClick = 0;
+        Game.loanSecond = 0;
         Game.executiveOrder = 0;
-        Game.executiveOrderCost = 100;
+        Game.excutiveOrderBase = 50;
+        Game.executiveOrderCost = 50;
+        Game.executiveOrderClick = 0;
+        Game.executiveOrderSecond = 0;
         Game.deport = 0; // Credit to Ryan Smalley
-        Game.deportCost = 250;
+        Game.deportBase = 75;
+        Game.deportCost = 75;
+        Game.deportClick = 0;
+        Game.deportSecond = 0;
         Game.phoneCall = 0; // Seth Atkinson
-        Game.phoneCallCost = 350;
+        Game.phoneCallBase = 100;
+        Game.phoneCallCost = 100;
+        Game.phoneCallClick = 0;
+        Game.phoneCallSecond = 0;
         Game.wall = 0;
+        Game.wallBase = 20000000000;
         Game.wallCost = 20000000000;
 
         Game.ClickCoin = function ()
@@ -137,8 +152,6 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned A Small Loan of a Million Dollars! (-" + Game.loanCost.toLocaleString() + " Trump Coins)";
                 Game.loan++;
                 Game.coins -= Game.loanCost;
-                Game.loanCost *= 1.05;
-                Game.loanCost = Math.round(Game.loanCost);
             }
         };
 
@@ -158,8 +171,6 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You earned An Executive Order by Mr. President himself (-" + Game.executiveOrderCost.toLocaleString() + " Trump Coins)";
                 Game.executiveOrder++;
                 Game.coins -= Game.executiveOrderCost;
-                Game.executiveOrderCost *= 1.055;
-                Game.executiveOrderCost = Math.round(Game.executiveOrderCost);
             }
         };
 
@@ -178,8 +189,6 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You deported an illegal immigrant (-" + Game.deportCost.toLocaleString() + " Trump Coins)";
                 Game.deport++;
                 Game.coins -= Game.deportCost;
-                Game.deportCost *= 1.060;
-                Game.deportCost = Math.round(Game.deportCost);
             }
         };
 
@@ -198,8 +207,6 @@ Game.Launch = function ()
                 document.getElementById("toolTip").innerHTML = "ToolTip: You made an international phone call (-" + Game.phoneCallCost.toLocaleString() + " Trump Coins)";
                 Game.phoneCall++;
                 Game.coins -= Game.phoneCallCost;
-                Game.phoneCallCost *= 1.065;
-                Game.phoneCallCost = Math.round(Game.phoneCallCost);
             }
         };
 
@@ -216,8 +223,6 @@ Game.Launch = function ()
                 }
                 Game.wall++;
                 Game.coins -= Game.wallCost;
-                Game.wallCost *= 2.5;
-                Game.wallCost = Math.round(Game.wallCost);
                 window.open("winner.html", "_blank", 'height=375,width=550');
             }
         };
@@ -236,14 +241,29 @@ Game.Launch = function ()
         Game.Update = function ()
         {
             Game.seconds++;
-            Game.coinsPerClick = 1 + Game.loan + (Game.executiveOrder * 3) + (Game.deport * 4) + (Game.phoneCall * 5);
-            Game.coinsPerSecond = 0 + (Game.loan * 2) + (Game.executiveOrder * 5) + (Game.deport * 6) + (Game.phoneCall * 7);
+            Game.loanCost = Math.round(Game.loanBase + (Math.pow(Game.loan, 2.15)));
+            Game.executiveOrderCost = Math.round(Game.excutiveOrderBase + (Math.pow(Game.executiveOrder, 2.20)));
+            Game.deportCost = Math.round(Game.deportBase + (Math.pow(Game.deport, 2.25)));
+            Game.phoneCallCost = Math.round(Game.phoneCallBase + (Math.pow(Game.phoneCall, 2.30)));
+            Game.wallCost = Math.round(Game.wallBase + (Math.pow(Game.wall, 25.25)));
+            Game.loanClick = Math.round(Math.pow(Game.loan, 1.15));
+            Game.loanSecond = Math.round(Math.pow(Game.loan, 1.20));
+            Game.executiveOrderClick = Math.round(Math.pow(Game.executiveOrder, 1.21));
+            Game.executiveOrderSecond = Math.round(Math.pow(Game.executiveOrder, 1.25));
+            Game.deportClick = Math.round(Math.pow(Game.deport, 1.26));
+            Game.deportSecond = Math.round(Math.pow(Game.deport, 1.30));
+            Game.phoneCallClick = Math.round(Math.pow(Game.phoneCall, 1.30));
+            Game.phoneCallSecond = Math.round(Math.pow(Game.phoneCall, 1.35));
+            TrophyClick = Math.round(Math.pow(TrophyCount, 1.70));
+            TrophySecond = Math.round(Math.pow(TrophyCount, 1.76));
+            Game.coinsPerClick = 1 + Game.loanClick + Game.executiveOrderClick + Game.deportClick + Game.phoneCallClick + TrophyClick;
+            Game.coinsPerSecond = 0 + Game.loanSecond + Game.executiveOrderSecond + Game.deportSecond + Game.phoneCallSecond + TrophySecond;
             Game.coins += Game.coinsPerSecond;
             document.getElementById("currentCoins").innerHTML = "<strong>Trump Coins</strong>: " + Game.coins.toLocaleString() + " (+" + Game.coinsPerClick.toLocaleString() + " CPC/+" + Game.coinsPerSecond.toLocaleString() + " CPS)";
-            document.getElementById("currentLoans").innerHTML = "<strong>Small Loans</strong>: " + Game.loan.toLocaleString() + " (+" + Game.loan.toLocaleString() + " CPC/+" + (Game.loan * 2).toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
-            document.getElementById("currentExecutiveOrders").innerHTML = "<strong>Executive Orders</strong>: " + Game.executiveOrder.toLocaleString() + " (+" + (Game.executiveOrder * 3).toLocaleString() + " CPC/+" + (Game.executiveOrder * 5).toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
-            document.getElementById("currentDeports").innerHTML = "<strong>Immigrants Deported</strong>: " + Game.deport.toLocaleString() + " (+" + (Game.deport * 4).toLocaleString() + " CPC/+" + (Game.deport * 6).toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
-            document.getElementById("currentPhoneCalls").innerHTML = "<strong>Phone Calls</strong>: " + Game.phoneCall.toLocaleString() + " (+" + (Game.phoneCall * 5).toLocaleString() + " CPC/+" + (Game.phoneCall * 7).toLocaleString() + " CPS)<br/>Price: " + Game.phoneCallCost.toLocaleString() + " TC";
+            document.getElementById("currentLoans").innerHTML = "<strong>Small Loans</strong>: " + Game.loan.toLocaleString() + " (+" + Game.loanClick.toLocaleString() + " CPC/+" + Game.loanSecond.toLocaleString() + " CPS)<br/>Price: " + Game.loanCost.toLocaleString() + " TC";
+            document.getElementById("currentExecutiveOrders").innerHTML = "<strong>Executive Orders</strong>: " + Game.executiveOrder.toLocaleString() + " (+" + Game.executiveOrderClick.toLocaleString() + " CPC/+" + Game.executiveOrderSecond.toLocaleString() + " CPS)<br/>Price: " + Game.executiveOrderCost.toLocaleString() + " TC";
+            document.getElementById("currentDeports").innerHTML = "<strong>Immigrants Deported</strong>: " + Game.deport.toLocaleString() + " (+" + Game.deportClick.toLocaleString() + " CPC/+" + Game.deportSecond.toLocaleString() + " CPS)<br/>Price: " + Game.deportCost.toLocaleString() + " TC";
+            document.getElementById("currentPhoneCalls").innerHTML = "<strong>Phone Calls</strong>: " + Game.phoneCall.toLocaleString() + " (+" + Game.phoneCallClick.toLocaleString() + " CPC/+" + Game.phoneCallSecond.toLocaleString() + " CPS)<br/>Price: " + Game.phoneCallCost.toLocaleString() + " TC";
             document.getElementById("currentWalls").innerHTML = "<strong>Walls Built</strong>: " + Game.wall.toLocaleString() + "<br/>Price: " + Game.wallCost.toLocaleString() + " TC";
             document.getElementById("stats").innerHTML = "<strong>Stats</strong><br/><br/><strong>Coin Clicks</strong>: " + Game.clicks.toLocaleString() + "<br/><strong>Upgrades</strong>: " + (Game.loan + Game.executiveOrder + Game.deport + Game.phoneCall) + "<br/><strong>Time</strong>: " + secondsToTime(Game.seconds);
             Trophies();
@@ -271,7 +291,7 @@ Game.Launch = function ()
             }
 
 
-            var text = "<strong>Trophies</strong> [" + TrophyCount + "/" + TotalTrophies + "]";
+            var text = "<strong>Trophies</strong> [" + TrophyCount + "/" + TotalTrophies + "] (+" + TrophyClick + " CPC /+" + TrophySecond + " CPS)";
             for (i = 0; i <= TotalTrophies; i++) {
                 if (Trophy[i] === 1) {
                     text = text + "<br/>[<img id='minime' src='img/trumpcoinmini.png' width='25' height='19' alt='*'/>] " + TrophyText[i];
@@ -321,7 +341,7 @@ Game.Launch = function ()
         document.getElementById("deportillegal").onclick = Game.ClickDeport;
         document.getElementById("phonecall").onclick = Game.ClickPhone;
         document.getElementById("thewall").onclick = Game.ClickWall;
-        document.getElementById("header").innerHTML = "Trump Clicker<br/>Version: " + Game.version;
+        document.getElementById("header").innerHTML = "Trump Clicker Version: " + Game.version;
         Game.Update();
         setInterval(Game.Update, 1000);
         playSound(5);
